@@ -2,6 +2,13 @@
 FROM ubuntu:14.04
 MAINTAINER Viktor Farcic "viktor@farcic.com"
 
+#lets configure image to pass through GTO proxy
+RUN echo 'Acquire::http::Proxy "http://proxy-sg-singapore.gemalto.com:8080";' >> /etc/apt/apt.conf
+RUN echo 'Acquire::https::Proxy "http://proxy-sg-singapore.gemalto.com:8080";' >> /etc/apt/apt.conf
+ 
+RUN export HTTP_PROXY=http://proxy-sg-singapore.gemalto.com:8080
+RUN export HTTPS_PROXY=http://proxy-sg-singapore.gemalto.com:8080
+
 # Packages
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
 RUN apt-get update && \
